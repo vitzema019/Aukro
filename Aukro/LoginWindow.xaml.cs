@@ -1,6 +1,4 @@
-﻿using Aukro.Data;
-using Aukro.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,30 +10,28 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Aukro
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interakční logika pro LoginWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LoginWindow : Window
     {
-        private MainViewModel vm;
-        internal MainWindow()
+        public LoginWindow()
         {
             InitializeComponent();
-            vm = (MainViewModel)DataContext;
-            vm.ShowCommand.Execute(null);
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.DataContext = vm;
-                vm.User = new();
-                loginWindow.ShowDialog();
+            this.Close();
+        }
+
+        private void End_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
