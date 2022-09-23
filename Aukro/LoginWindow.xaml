@@ -8,9 +8,9 @@
         Title="LoginWindow" Height="200" Width="200">
     <Grid>
         <StackPanel Orientation="Vertical" Margin="10">
-            <Label Content="Label"/>
+            <Label Content="Uživatelské jméno"/>
             <TextBox  Text="{Binding User.Username}"/>
-            <Label Content="Label"/>
+            <Label Content="Heslo"/>
             <TextBox  Text="{Binding User.Password}"/>
             <Button Click="Login_Click" Command="{Binding LoginCommand}" CommandParameter="{Binding User}">Přihlásit se</Button>
             <Button Click="End_Click">Odejít</Button>
