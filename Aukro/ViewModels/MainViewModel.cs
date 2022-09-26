@@ -12,14 +12,14 @@ using System.Windows;
 
 namespace Aukro.ViewModels
 {
-    internal class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
         public ApplicationDbContext Db { get; set; } = new ApplicationDbContext();
-        private User _user;
+        private User? _user;
         private ObservableCollection<Auction> _auctions;
-        private string _currentUser;
-        private int? _UserId;
+        private string _currentUser = "Nepřihlášen";
         private string? _LoginErrorMessage;
+        private bool _isLoggedIn = false;
 
         public RelayCommand ShowCommand { get; set; }
         public ParametrizedRelayCommand<User> LoginCommand { get; set; }
@@ -27,52 +27,16 @@ namespace Aukro.ViewModels
 
         public MainViewModel()
         {
-            ShowCommand = new RelayCommand(
-                () => { 
-                    if (Db != null)
-                    {
-                        if (_user != null)
-                        {
-                            User u = Db.Users.Where(x => x.Id == _UserId).SingleOrDefault();
-                            CurrentUser = u.Username;
-                        }
-                        else
-                        {
-                            CurrentUser = "Nepřihlášen";
-                        }
-                    }
-                }
-                );
-
-
-            LoginCommand = new ParametrizedRelayCommand<User>(
-                async (user) => {
-                    if (Db != null)
-                    {
-
-                        User u = Db.Users.Where(x => x.Username == user.Username && x.Password == user.Password).SingleOrDefault();
-                        if(u != null) 
-                        {
-                            CurrentUser = u.Username;
-                        }
-                        else 
-                        {
-                            MessageBox.Show("Unable to Login, incorrect credentials.");
-                        }
-                            
-
-
-                            
-
-                        
-                    }
-                }
-                );
+           
         }
 
-        
 
-        public string LoginErrorMessage 
+        public bool IsLoggedIn
+        {
+            get { return _isLoggedIn; }
+            set { _isLoggedIn = value; NotifyPropertyChanged(); }
+        }
+        public string? LoginErrorMessage 
         {
             get { return _LoginErrorMessage; }
             set { _LoginErrorMessage = value; NotifyPropertyChanged(); }
@@ -83,7 +47,7 @@ namespace Aukro.ViewModels
             set { _currentUser = value; NotifyPropertyChanged(); }
         }
 
-        public User User
+        public User? User
         {
             get { return _user; }
             set { _user = value; NotifyPropertyChanged(); }

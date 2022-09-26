@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aukro.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,14 +20,54 @@ namespace Aukro
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public LoginWindow()
+        private MainViewModel _vm;
+        public LoginWindow(MainViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
+            _vm = vm;
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            _vm.LoginErrorMessage = null;
+            if(nameBox.Text.Length == 0) 
+            {
+                _vm.LoginErrorMessage = "Pole nesmí být prázdné";
+                nameBox.Focus();
+            }
+            else 
+            {
+                if(passwordBox.Password.Length == 0) 
+                {
+                    _vm.LoginErrorMessage = "Pole nesmí být prázdné";
+                    passwordBox.Focus();
+                }
+                else 
+                {
+                    if (_vm.Db != null)
+                    {
+
+                        var user = _vm.Db.Users.Where(x => x.Username == nameBox.Text && x.Password == passwordBox.Password).SingleOrDefault();
+                        if (user != null)
+                        {
+                            _vm.User = user;
+                            _vm.CurrentUser = user.Username;
+                            _vm.IsLoggedIn = true;
+                            _vm.LoginErrorMessage = null;
+                            this.Close();
+                        }
+                        else
+                        {
+                            ;
+                            _vm.LoginErrorMessage = "Špatné přihlašovací údaje!";
+                        }
+                    }
+                }
+                
+            }
+            
+            
         }
 
         private void End_Click(object sender, RoutedEventArgs e)

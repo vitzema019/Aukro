@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Aukro.ViewModels
 {
-    internal class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 

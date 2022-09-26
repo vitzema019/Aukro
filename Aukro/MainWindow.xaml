@@ -12,8 +12,10 @@
     </Window.DataContext>
     <Grid>
         <StackPanel Margin="0,0,0,368" Orientation="Horizontal">
-            <Button Click="Login_Click" Content="Přihlášní" Width="116" Margin="15,0,15,0"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding CurrentUser }" VerticalAlignment="Center"/>
+            <Button Click="Login_Click" Content="Přihlášní" Width="116" Margin="15,0,15,0" Height="41"/>
+            <Button Click="Register_Click" Content="Registrace" Width="116" Margin="15,0,15,0" Height="41"/>
+            <Button Click="Logout_Click"  IsEnabled="{Binding IsLoggedIn, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Content="Odhlásit se" Width="116" Margin="15,0,15,0" Height="41" Foreground="Black"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding CurrentUser, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" VerticalAlignment="Center" Foreground="Black"/>
         </StackPanel>
 
 

@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Aukro.ViewModels
 {
-    internal class ParametrizedRelayCommand<T> : ICommand
+    public class ParametrizedRelayCommand<T> : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 

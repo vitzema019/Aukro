@@ -22,20 +22,35 @@ namespace Aukro
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainViewModel vm;
+        private MainViewModel _vm;
         internal MainWindow()
         {
             InitializeComponent();
-            vm = (MainViewModel)DataContext;
-            vm.ShowCommand.Execute(null);
+            _vm = (MainViewModel)DataContext;
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-                LoginWindow loginWindow = new LoginWindow();
-                loginWindow.DataContext = vm;
-                vm.User = new();
+                LoginWindow loginWindow = new LoginWindow(_vm);
+                loginWindow.DataContext = _vm;
+                _vm.LoginErrorMessage = null;
+                //_vm.User = new();
                 loginWindow.ShowDialog();
+        }
+
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            _vm.User = null;
+            _vm.CurrentUser = "Nepřihlášen";
+            _vm.IsLoggedIn = false;
+        }
+
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            Register registerWindow = new Register(_vm);
+            registerWindow.DataContext = _vm;
+            _vm.LoginErrorMessage = null;
+            registerWindow.ShowDialog();
         }
     }
 }
