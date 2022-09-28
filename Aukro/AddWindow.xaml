@@ -4,9 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Aukro"
+        xmlns:vm="clr-namespace:Aukro.ViewModels"
         mc:Ignorable="d"
-        Title="AddWindow" Height="450" Width="800">
+        Title="AddWindow" Height="450" Width="300">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <StackPanel Orientation="Vertical" Margin="10">
+            <Label Content="Název"/>
+            <TextBox  Text="{Binding NewAuction.Name}"/>
+            <Label Content="Cena"/>
+            <TextBox  Text="{Binding NewAuction.MinimumPrice}" />
+            <Label Content="Popis"/>
+            <TextBox  Text="{Binding NewAuction.Description}"/>
+            <Label Content="Kategorie"/>
+            <TextBox  Text="{Binding NewAuction.Category}"/>
+            <Label Content="Konec Aukce"/>
+            <TextBox  Text="{Binding NewAuction.DateOfEnd}" />
+            <Label Content="{Binding LoginErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" Foreground="Red"/>
+            <Button Click="Add_Click">Registrovat se</Button>
+            <Button Click="End_Click">Odejít</Button>
+        </StackPanel>
     </Grid>
 </Window>

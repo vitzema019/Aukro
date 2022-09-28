@@ -24,6 +24,7 @@ namespace Aukro.ViewModels
         private bool _isLoggedIn = false;
         private Auction _selectedAuction;
         private Auction _yourSelectedAuction;
+        private Auction _newAuction;
         //public RelayCommand ShowCommand { get; set; }
         //public ParametrizedRelayCommand<User> LoginCommand { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -56,6 +57,19 @@ namespace Aukro.ViewModels
                 }
 
                );
+
+            AddCommand = new ParametrizedRelayCommand<Auction>(
+                async (newproduct) => {
+                    newproduct.CreatorId = User.Id;
+                    newproduct.LastUserId = User.Id;
+                    newproduct.DateOfCreation = DateTime.Now;
+                    Db.Auctions.Add(newproduct);
+                    Db.SaveChanges();
+                    GetAuctionsComand.Execute(null);
+                    GetYourAuctionsComand.Execute(null);
+
+                }
+               );
         }
 
         public void GetUsers()
@@ -66,6 +80,7 @@ namespace Aukro.ViewModels
 
         public RelayCommand GetAuctionsComand { get; set; }
         public RelayCommand GetYourAuctionsComand { get; set; }
+        public ParametrizedRelayCommand<Auction> AddCommand { get; set; }
         public bool IsLoggedIn
         {
             get { return _isLoggedIn; }
@@ -121,6 +136,12 @@ namespace Aukro.ViewModels
         {
             get { return _yourSelectedAuction; }
             set { _yourSelectedAuction = value; NotifyPropertyChanged(); }
+        }
+
+        public Auction NewAuction 
+        {
+            get {return _newAuction;}
+            set { _newAuction = value; NotifyPropertyChanged(); }
         }
     }
 }

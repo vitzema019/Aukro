@@ -59,12 +59,16 @@ namespace Aukro
 
         private void Bid_Click(object sender, RoutedEventArgs e) 
         {
-
+            
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-
+            AddWindow addWindow = new AddWindow(_vm);
+            addWindow.DataContext = _vm;
+            _vm.LoginErrorMessage = null;
+            _vm.NewAuction = new();
+            addWindow.ShowDialog();
         }
 
         private void DeleteYourAuction_Click(object sender, RoutedEventArgs e)

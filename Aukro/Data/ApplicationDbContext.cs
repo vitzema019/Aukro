@@ -27,19 +27,22 @@ namespace Aukro.Data
             base.OnModelCreating(builder);
 
             builder.Entity<User>().HasData(new User { Id = 1, Username = "Ruby", Password = "1234" });
-            builder.Entity<Auction>().HasData(new Auction { AuctionId = 1, MinimumPrice = 5, Name = "Stolička", Description = "Vhodná na sezení", Category = "Nábytek", DateOfCreation = new DateTime(2022, 09, 21), DateOfEnd = new DateTime(2012, 09, 22), CreatorId = 1, LastUserId = 1 });
+            builder.Entity<User>().HasData(new User { Id = 2, Username = "Ruby4", Password = "12345" });
+
 
             builder.Entity<Auction>()
                 .HasOne(ma => ma.Creator)
                 .WithMany(ma => ma.AuctionCreator)
-                .HasForeignKey(ma => ma.CreatorId);
+                .HasForeignKey(ma => ma.CreatorId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Auction>()
                .HasOne(ma => ma.LastUser)
                .WithMany(ma => ma.AuctionLastUser)
-               .HasForeignKey(ma => ma.LastUserId);
+               .HasForeignKey(ma => ma.LastUserId)
+               .OnDelete(DeleteBehavior.Cascade);
 
-           
+
         }
     }
 }

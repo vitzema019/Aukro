@@ -27,5 +27,15 @@ namespace Aukro
             DataContext = vm;
             _vm = vm;
         }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            _vm.AddCommand.Execute(_vm.NewAuction);
+        }
+
+        private void End_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
