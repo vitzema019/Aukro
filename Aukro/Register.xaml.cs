@@ -84,6 +84,8 @@ namespace Aukro
                         _vm.Db.Users.Add(newUser);
                         _vm.Db.SaveChanges();
                         this.Close();
+                        MessageBox.Show("Registrace uživatele " + newUser.Username + " proběhla úspěšně");
+
                     }
                 }
             }
@@ -91,7 +93,7 @@ namespace Aukro
 
         private void End_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
     }
 }

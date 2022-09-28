@@ -43,6 +43,7 @@ namespace Aukro
             _vm.User = null;
             _vm.CurrentUser = "Nepřihlášen";
             _vm.IsLoggedIn = false;
+            MessageBox.Show("Byli jste úspěšně odhlášeni");
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)

@@ -5,18 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Aukro"
         xmlns:vm="clr-namespace:Aukro.ViewModels"
+        xmlns:conv="clr-namespace:Aukro.Convertor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" MinHeight="450" MinWidth="800">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <conv:InvertBoolConvertor x:Key="InvertBoolConvertor" />
+    </Window.Resources>
     <Grid>
-        <StackPanel Margin="0,0,0,368" Orientation="Horizontal">
-            <Button Click="Login_Click" Content="Přihlášní" Width="116" Margin="15,0,15,0" Height="41"/>
-            <Button Click="Register_Click" Content="Registrace" Width="116" Margin="15,0,15,0" Height="41"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="85*"/>
+            <RowDefinition Height="349*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="229*"/>
+            <ColumnDefinition Width="171*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="10,10,10,10" Orientation="Horizontal">
+            <Button Click="Login_Click" Content="Přihlášní" Width="116" Margin="15,0,15,0" Height="45"/>
+            <Button Click="Register_Click" IsEnabled="{Binding IsLoggedIn, Converter={StaticResource InvertBoolConvertor}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Content="Registrace" Width="116" Margin="15,0,15,0" Height="41"/>
             <Button Click="Logout_Click"  IsEnabled="{Binding IsLoggedIn, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Content="Odhlásit se" Width="116" Margin="15,0,15,0" Height="41" Foreground="Black"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding CurrentUser, Mode=OneWay, UpdateSourceTrigger=PropertyChanged }" VerticalAlignment="Center" Foreground="Black"/>
         </StackPanel>
+        <Label Height="41" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <TextBlock Text="{Binding CurrentUser, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat='Uživatel: {0}'}" Foreground="Black"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="322" TextAlignment="Center" />
+        </Label>
+        <TabControl Grid.Row="2" Grid.ColumnSpan="2">
+            <TabItem Header="Položky">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem IsEnabled="{Binding IsLoggedIn, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Vaše položky">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
 
 
     </Grid>

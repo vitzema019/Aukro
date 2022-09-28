@@ -56,6 +56,7 @@ namespace Aukro
                             _vm.IsLoggedIn = true;
                             _vm.LoginErrorMessage = null;
                             this.Close();
+                            MessageBox.Show("Vítej uživateli " + _vm.User.Username);
                         }
                         else
                         {
@@ -63,11 +64,8 @@ namespace Aukro
                             _vm.LoginErrorMessage = "Špatné přihlašovací údaje!";
                         }
                     }
-                }
-                
-            }
-            
-            
+                }   
+            } 
         }
 
         private void End_Click(object sender, RoutedEventArgs e)
