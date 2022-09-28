@@ -16,27 +16,62 @@ namespace Aukro.ViewModels
     {
         public ApplicationDbContext Db { get; set; } = new ApplicationDbContext();
         private User? _user;
-        private ObservableCollection<Auction> _auctions;
+        private ObservableCollection<Auction>? _auctions;
+        private ObservableCollection<Auction>? _yourAuctions;
+        private ObservableCollection<User>? _users;
         private string _currentUser = "Nepřihlášen";
         private string? _LoginErrorMessage;
         private bool _isLoggedIn = false;
-
-        public RelayCommand ShowCommand { get; set; }
-        public ParametrizedRelayCommand<User> LoginCommand { get; set; }
+        private Auction _selectedAuction;
+        private Auction _yourSelectedAuction;
+        //public RelayCommand ShowCommand { get; set; }
+        //public ParametrizedRelayCommand<User> LoginCommand { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MainViewModel()
         {
            
+
+            GetAuctionsComand = new RelayCommand(
+                 () =>
+                     {
+                         var auctions = Db.Auctions.ToList();
+                         Auctions = new ObservableCollection<Auction>(auctions);
+                     }
+
+                );
+            GetYourAuctionsComand = new RelayCommand(
+                () =>
+                {
+                    if (_isLoggedIn == true)
+                    {
+                        var yourAuctions = Db.Auctions.Where(x => x.CreatorId == User.Id).ToList();
+                        YourAuctions = new ObservableCollection<Auction>(yourAuctions);
+                    }
+                    else 
+                    {
+                        YourAuctions = null;
+                    }
+                   
+                }
+
+               );
         }
 
+        public void GetUsers()
+        {
+            var users = Db.Users.ToList();
+            Users = new ObservableCollection<User>(users);
+        }
 
+        public RelayCommand GetAuctionsComand { get; set; }
+        public RelayCommand GetYourAuctionsComand { get; set; }
         public bool IsLoggedIn
         {
             get { return _isLoggedIn; }
             set { _isLoggedIn = value; NotifyPropertyChanged(); }
         }
-        public string? LoginErrorMessage 
+        public string? LoginErrorMessage
         {
             get { return _LoginErrorMessage; }
             set { _LoginErrorMessage = value; NotifyPropertyChanged(); }
@@ -52,9 +87,40 @@ namespace Aukro.ViewModels
             get { return _user; }
             set { _user = value; NotifyPropertyChanged(); }
         }
-            private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public ObservableCollection<Auction>? Auctions
+        {
+            get { return _auctions; }
+            set { _auctions = value; NotifyPropertyChanged(); }
+        }
+
+        public Auction SelectedAuction
+        {
+            get { return _selectedAuction; }
+            set { _selectedAuction = value; NotifyPropertyChanged(); }
+        }
+
+        public ObservableCollection<User>? Users 
+        
+        {
+            get { return _users; }
+            set { _users = value; NotifyPropertyChanged(); }
+        }
+
+        public ObservableCollection<Auction>? YourAuctions
+        {
+            get { return _yourAuctions; }
+            set { _yourAuctions = value; NotifyPropertyChanged(); }
+        }
+
+        public Auction YourSelectedAuction
+        {
+            get { return _yourSelectedAuction; }
+            set { _yourSelectedAuction = value; NotifyPropertyChanged(); }
         }
     }
 }

@@ -20,26 +20,61 @@
             <RowDefinition Height="349*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="229*"/>
-            <ColumnDefinition Width="171*"/>
+            <ColumnDefinition Width="261*"/>
+            <ColumnDefinition Width="139*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Margin="10,10,10,10" Orientation="Horizontal">
-            <Button Click="Login_Click" Content="Přihlášní" Width="116" Margin="15,0,15,0" Height="45"/>
-            <Button Click="Register_Click" IsEnabled="{Binding IsLoggedIn, Converter={StaticResource InvertBoolConvertor}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Content="Registrace" Width="116" Margin="15,0,15,0" Height="41"/>
-            <Button Click="Logout_Click"  IsEnabled="{Binding IsLoggedIn, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Content="Odhlásit se" Width="116" Margin="15,0,15,0" Height="41" Foreground="Black"/>
+            <Button Click="Login_Click" Content="Přihlášní" Width="95" Margin="15,0,15,0" Height="45"/>
+            <Button Click="Register_Click" IsEnabled="{Binding IsLoggedIn, Converter={StaticResource InvertBoolConvertor}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Content="Registrace" Width="95" Margin="15,0,15,0" Height="41"/>
+            <Button Click="Logout_Click"  IsEnabled="{Binding IsLoggedIn, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Content="Odhlásit se" Width="95" Margin="15,0,15,0" Height="41" Foreground="Black"/>
+            <Button Click="Add_Click" IsEnabled="{Binding IsLoggedIn, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Content="Přidat" Width="95" Margin="15,0,15,0" Height="45"/>
         </StackPanel>
-        <Label Height="41" Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
-            <TextBlock Text="{Binding CurrentUser, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat='Uživatel: {0}'}" Foreground="Black"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="322" TextAlignment="Center" />
+        <Label Grid.Column="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Margin="0,22,0,22">
+            <TextBlock Text="{Binding CurrentUser, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat='Uživatel: {0}'}" Foreground="Black"  HorizontalAlignment="Left" VerticalAlignment="Center" Width="256" TextAlignment="Center" />
         </Label>
-        <TabControl Grid.Row="2" Grid.ColumnSpan="2">
+        <TabControl Grid.ColumnSpan="2" Margin="0,85,0,0" Grid.RowSpan="2">
             <TabItem Header="Položky">
-                <Grid Background="#FFE5E5E5"/>
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid ItemsSource="{Binding Auctions}"  Grid.Column="2" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectedItem="{Binding SelectedAuction}" Grid.RowSpan="2">
+                        <DataGrid.Resources>
+                            <DataTemplate x:Key="ActionTemplate">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Click="Bid_Click">Přihodit</Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Název" Binding="{Binding Name}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Autor" Binding="{Binding Creator.Username}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Poslední přihazuhjící" Binding="{Binding LastUser.Username}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Přidáno" Binding="{Binding DateOfCreation.Date}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Konec" Binding="{Binding DateOfEnd.Date}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Cena" Binding="{Binding MinimumPrice, StringFormat='{}{0} Kč '}" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Header="Akce" CellTemplate="{StaticResource ActionTemplate}"></DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
             <TabItem IsEnabled="{Binding IsLoggedIn, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Header="Vaše položky">
                 <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+                    <DataGrid ItemsSource="{Binding YourAuctions}"  Grid.Column="2" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectedItem="{Binding YourSelectedAuction}" Grid.RowSpan="2">
+                        <DataGrid.Resources>
+                            <DataTemplate x:Key="YourActionTemplate">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Click="DeleteYourAuction_Click">Odebrat</Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Název" Binding="{Binding Name}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Autor" Binding="{Binding Creator.Username}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Poslední přihazuhjící" Binding="{Binding LastUser.Username}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Přidáno" Binding="{Binding DateOfCreation.Date}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Konec" Binding="{Binding DateOfEnd.Date}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Cena" Binding="{Binding MinimumPrice, StringFormat='{}{0} Kč '}" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Header="Akce" CellTemplate="{StaticResource YourActionTemplate}"></DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
         </TabControl>

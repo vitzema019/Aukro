@@ -27,15 +27,17 @@ namespace Aukro
         {
             InitializeComponent();
             _vm = (MainViewModel)DataContext;
+            _vm.GetAuctionsComand.Execute(null);
+            _vm.GetUsers();
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-                LoginWindow loginWindow = new LoginWindow(_vm);
-                loginWindow.DataContext = _vm;
-                _vm.LoginErrorMessage = null;
-                //_vm.User = new();
-                loginWindow.ShowDialog();
+            LoginWindow loginWindow = new LoginWindow(_vm);
+            loginWindow.DataContext = _vm;
+            _vm.LoginErrorMessage = null;
+            //_vm.User = new();
+            loginWindow.ShowDialog();
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)
@@ -43,6 +45,7 @@ namespace Aukro
             _vm.User = null;
             _vm.CurrentUser = "Nepřihlášen";
             _vm.IsLoggedIn = false;
+            _vm.GetYourAuctionsComand.Execute(null);
             MessageBox.Show("Byli jste úspěšně odhlášeni");
         }
 
@@ -53,5 +56,21 @@ namespace Aukro
             _vm.LoginErrorMessage = null;
             registerWindow.ShowDialog();
         }
+
+        private void Bid_Click(object sender, RoutedEventArgs e) 
+        {
+
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteYourAuction_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
     }
 }

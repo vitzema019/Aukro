@@ -83,6 +83,7 @@ namespace Aukro
                         _vm.LoginErrorMessage = null;
                         _vm.Db.Users.Add(newUser);
                         _vm.Db.SaveChanges();
+                        _vm.GetUsers();
                         this.Close();
                         MessageBox.Show("Registrace uživatele " + newUser.Username + " proběhla úspěšně");
 

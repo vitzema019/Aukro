@@ -55,6 +55,7 @@ namespace Aukro
                             _vm.CurrentUser = user.Username;
                             _vm.IsLoggedIn = true;
                             _vm.LoginErrorMessage = null;
+                            _vm.GetYourAuctionsComand.Execute(null);
                             this.Close();
                             MessageBox.Show("Vítej uživateli " + _vm.User.Username);
                         }
