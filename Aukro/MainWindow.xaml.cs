@@ -59,11 +59,20 @@ namespace Aukro
 
         private void Bid_Click(object sender, RoutedEventArgs e) 
         {
-            
+            if (_vm.SelectedAuction != null)
+            {
+                _vm.LoginErrorMessage = null;
+                BidWindow bidWindow = new BidWindow(_vm);
+                bidWindow.DataContext = _vm;
+                var b = _vm.Auctions.Where(x => x.AuctionId == _vm.SelectedAuction.AuctionId).Select(x => x.MinimumPrice).FirstOrDefault();
+                _vm.BeforeBid = b;
+                bidWindow.ShowDialog();
+            }
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
+            _vm.LoginErrorMessage = null;
             AddWindow addWindow = new AddWindow(_vm);
             addWindow.DataContext = _vm;
             _vm.LoginErrorMessage = null;

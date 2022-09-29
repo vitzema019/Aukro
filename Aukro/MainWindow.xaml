@@ -39,7 +39,7 @@
                         <DataGrid.Resources>
                             <DataTemplate x:Key="ActionTemplate">
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Click="Bid_Click">Přihodit</Button>
+                                    <Button IsEnabled="{Binding DataContext.IsLoggedIn,RelativeSource={RelativeSource AncestorType={x:Type Window}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Click="Bid_Click">Přihodit</Button>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGrid.Resources>
@@ -61,7 +61,7 @@
                         <DataGrid.Resources>
                             <DataTemplate x:Key="YourActionTemplate">
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Command="{Binding DataContext.DeleteAuctionCommand,RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding AuctionId}" >Odebrat</Button>
+                                    <Button IsEnabled="{Binding DataContext.IsLogged,RelativeSource={RelativeSource AncestorType={x:Type Window}}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Command="{Binding DataContext.DeleteAuctionCommand,RelativeSource={RelativeSource AncestorType={x:Type Window}}}" CommandParameter="{Binding AuctionId}" >Odebrat</Button>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGrid.Resources>

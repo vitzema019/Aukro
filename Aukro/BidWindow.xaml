@@ -1,0 +1,18 @@
+﻿<Window x:Class="Aukro.BidWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Aukro"
+        mc:Ignorable="d"
+        Title="BidWindow" Height="200" Width="250">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="10">
+            <Label Content="Částka"/>
+            <TextBox  Text="{Binding SelectedAuction.MinimumPrice}"/>
+            <Label Content="{Binding LoginErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" Foreground="Red"/>
+            <Button Click="Button_Click">Přihodit</Button>
+            <Button Click="End_Click">Odejít</Button>
+        </StackPanel>  
+    </Grid>
+</Window>

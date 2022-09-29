@@ -25,6 +25,7 @@ namespace Aukro.ViewModels
         private Auction _selectedAuction;
         private Auction _yourSelectedAuction;
         private Auction _newAuction;
+        private int _beforeBid;
         //public RelayCommand ShowCommand { get; set; }
         //public ParametrizedRelayCommand<User> LoginCommand { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -80,6 +81,17 @@ namespace Aukro.ViewModels
                         GetYourAuctionsComand.Execute(null);
                     }
                 );
+            BidCommand = new ParametrizedRelayCommand<Auction>(
+                (bid) =>
+                    {
+                        Auction a = Db.Auctions.Where(x => x.AuctionId == bid.AuctionId).FirstOrDefault();
+                        a.MinimumPrice = bid.MinimumPrice;
+                        a.LastUserId = User.Id;
+                        Db.SaveChanges();
+                        GetAuctionsComand.Execute(null);
+                        GetYourAuctionsComand.Execute(null);
+                    }
+                );
         }
 
         public void GetUsers()
@@ -91,6 +103,7 @@ namespace Aukro.ViewModels
         public RelayCommand GetAuctionsComand { get; set; }
         public RelayCommand GetYourAuctionsComand { get; set; }
         public ParametrizedRelayCommand<Auction> AddCommand { get; set; }
+        public ParametrizedRelayCommand<Auction> BidCommand { get; set; }
         public ParametrizedRelayCommand<int> DeleteAuctionCommand { get; set; }
         public bool IsLoggedIn
         {
@@ -153,6 +166,12 @@ namespace Aukro.ViewModels
         {
             get {return _newAuction;}
             set { _newAuction = value; NotifyPropertyChanged(); }
+        }
+
+        public int BeforeBid 
+        {
+            get { return _beforeBid; }
+            set { _beforeBid = value; NotifyPropertyChanged(); }
         }
     }
 }
