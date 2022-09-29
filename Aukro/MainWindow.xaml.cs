@@ -23,7 +23,7 @@ namespace Aukro
     public partial class MainWindow : Window
     {
         private MainViewModel _vm;
-        internal MainWindow()
+        public MainWindow()
         {
             InitializeComponent();
             _vm = (MainViewModel)DataContext;

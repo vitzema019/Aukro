@@ -59,13 +59,13 @@ namespace Aukro.ViewModels
 
                );
             AddCommand = new ParametrizedRelayCommand<Auction>(
-                async (newproduct) => {
+                 (newproduct) => {
                     newproduct.CreatorId = User.Id;
                     newproduct.LastUserId = User.Id;
                     newproduct.DateOfCreation = DateTime.Now;
                     Db.Auctions.Add(newproduct);
                     Db.SaveChanges();
-                    GetUsers();
+                    //GetUsers();
                     GetAuctionsComand.Execute(null);
                     GetYourAuctionsComand.Execute(null);
                 }

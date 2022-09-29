@@ -18,9 +18,9 @@ namespace Aukro.Models
         public DateTime DateOfCreation { get; set; }
         public DateTime DateOfEnd { get; set; }
         public int? CreatorId { get; set; }
-        public User Creator { get; set; }
+        public User? Creator { get; set; }
         public int? LastUserId { get; set; }
-        public User LastUser { get; set; }
+        public User? LastUser { get; set; }
 
 
     }

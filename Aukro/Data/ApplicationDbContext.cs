@@ -41,6 +41,7 @@ namespace Aukro.Data
                .WithOne(ma => ma.LastUser)
                .HasForeignKey(ma => ma.LastUserId)
                .OnDelete(DeleteBehavior.Cascade);
+            
 
 
         }

@@ -14,8 +14,8 @@ namespace Aukro.Models
         public string? Email { get; set; }
         public string Password { get; set; }
 
-        public IEnumerable<Auction> AuctionCreator { get; set; }
-        public IEnumerable<Auction> AuctionLastUser { get; set; }
+        public IEnumerable<Auction>? AuctionCreator { get; set; }
+        public IEnumerable<Auction>? AuctionLastUser { get; set; }
 
     }
 }
