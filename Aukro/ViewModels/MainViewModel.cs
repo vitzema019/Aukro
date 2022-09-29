@@ -57,7 +57,6 @@ namespace Aukro.ViewModels
                 }
 
                );
-
             AddCommand = new ParametrizedRelayCommand<Auction>(
                 async (newproduct) => {
                     newproduct.CreatorId = User.Id;
@@ -65,11 +64,22 @@ namespace Aukro.ViewModels
                     newproduct.DateOfCreation = DateTime.Now;
                     Db.Auctions.Add(newproduct);
                     Db.SaveChanges();
+                    GetUsers();
                     GetAuctionsComand.Execute(null);
                     GetYourAuctionsComand.Execute(null);
-
                 }
                );
+
+            DeleteAuctionCommand = new ParametrizedRelayCommand<int>(
+                (id) =>
+                    {
+                        var x = Db.Auctions.Where(x => x.AuctionId == id).FirstOrDefault();
+                        Db.Auctions.Remove(x);
+                        Db.SaveChanges();
+                        GetAuctionsComand.Execute(null);
+                        GetYourAuctionsComand.Execute(null);
+                    }
+                );
         }
 
         public void GetUsers()
@@ -81,6 +91,7 @@ namespace Aukro.ViewModels
         public RelayCommand GetAuctionsComand { get; set; }
         public RelayCommand GetYourAuctionsComand { get; set; }
         public ParametrizedRelayCommand<Auction> AddCommand { get; set; }
+        public ParametrizedRelayCommand<int> DeleteAuctionCommand { get; set; }
         public bool IsLoggedIn
         {
             get { return _isLoggedIn; }

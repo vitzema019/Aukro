@@ -15,7 +15,7 @@ namespace Aukro.Data
         public DbSet<User>? Users { get; set; }
         public ApplicationDbContext() : base()
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -30,15 +30,15 @@ namespace Aukro.Data
             builder.Entity<User>().HasData(new User { Id = 2, Username = "Ruby4", Password = "12345" });
 
 
-            builder.Entity<Auction>()
-                .HasOne(ma => ma.Creator)
-                .WithMany(ma => ma.AuctionCreator)
+            builder.Entity<User>()
+                .HasMany(ma => ma.AuctionCreator)
+                .WithOne(ma => ma.Creator)
                 .HasForeignKey(ma => ma.CreatorId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Auction>()
-               .HasOne(ma => ma.LastUser)
-               .WithMany(ma => ma.AuctionLastUser)
+            builder.Entity<User>()
+               .HasMany(ma => ma.AuctionLastUser)
+               .WithOne(ma => ma.LastUser)
                .HasForeignKey(ma => ma.LastUserId)
                .OnDelete(DeleteBehavior.Cascade);
 

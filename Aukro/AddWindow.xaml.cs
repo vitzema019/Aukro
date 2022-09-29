@@ -31,6 +31,7 @@ namespace Aukro
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             _vm.AddCommand.Execute(_vm.NewAuction);
+            this.Close();
         }
 
         private void End_Click(object sender, RoutedEventArgs e)
